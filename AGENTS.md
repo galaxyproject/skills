@@ -25,6 +25,25 @@ If the user asks to convert Nextflow pipelines/modules/processes to Galaxy tools
 
 Follow the planning/approval checkpoints required by the skills before implementing changes.
 
+## Galaxy Integration
+
+If the user asks about Galaxy MCP, JupyterLite notebooks, or BioBlend automation:
+
+- Router:
+  - `galaxy-integration/SKILL.md`
+
+- Sub-skills:
+  - `galaxy-integration/jupyterlite/SKILL.md` (JupyterLite notebooks with gxy package)
+  - `galaxy-integration/mcp-reference/SKILL.md` (Galaxy MCP tools reference)
+
+- References:
+  - `galaxy-integration/mcp-reference/history-access.md` (history/dataset access patterns)
+  - `galaxy-integration/mcp-reference/gotchas.md` (common pitfalls)
+  - `galaxy-integration/galaxy-integration.md` (detailed MCP + BioBlend docs)
+  - `galaxy-integration/scripts/galaxy_tool_checker.py` (BioBlend automation)
+  - `galaxy-integration/examples/` (tool checking and workflow testing examples)
+  - `galaxy-integration/jupyterlite/examples/` (JupyterLite notebook examples)
+
 ## Other skills in this repo
 
 If the user asks about one of these tasks, use the corresponding skill:
