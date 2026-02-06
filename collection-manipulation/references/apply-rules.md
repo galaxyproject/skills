@@ -1236,18 +1236,18 @@ rules:
 **Problem:** Confusion about filter invert
 
 ```yaml
+# Keep matching rows (default behavior)
+- type: add_filter_regex
+  expression: 'sample_'
+  invert: false  # FALSE means "keep matching"
+
 # Remove matching rows (keep non-matching)
 - type: add_filter_regex
   expression: 'control_'
-  invert: false  # FALSE means "remove matching"
-
-# Keep matching rows
-- type: add_filter_regex
-  expression: 'sample_'
-  invert: true  # TRUE means "remove non-matching" = keep matching
+  invert: true  # TRUE means "remove matching" = keep non-matching
 ```
 
-**Clearer thinking:** `invert: false` = "remove matches", `invert: true` = "remove non-matches"
+**Clearer thinking:** `invert: false` = "keep matches", `invert: true` = "remove matches" (keep non-matching)
 
 ### Pitfall 3: Regex Escaping
 
