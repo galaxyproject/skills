@@ -311,7 +311,7 @@ rules:
 
 | Rule Type | Purpose | Parameters |
 |-----------|---------|------------|
-| `add_filter_regex` | Keep/remove by pattern | `target_column`, `expression`, `invert` (false=remove matches, true=keep matches) |
+| `add_filter_regex` | Keep/remove by pattern | `target_column`, `expression`, `invert` (false=keep matches, true=remove matches) |
 | `add_filter_matches` | Exact value match | `target_column`, `value`, `invert` |
 | `add_filter_count` | First/last N rows | `count`, `which`: first/last, `invert` |
 | `add_filter_empty` | Remove empty cells | `target_column`, `invert` |

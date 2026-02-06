@@ -1236,18 +1236,18 @@ rules:
 **Problem:** Confusion about filter invert
 
 ```yaml
+# Keep matching rows (default behavior)
+- type: add_filter_regex
+  expression: 'sample_'
+  invert: false  # FALSE means "keep matching"
+
 # Remove matching rows (keep non-matching)
 - type: add_filter_regex
   expression: 'control_'
-  invert: false  # FALSE means "remove matching"
-
-# Keep matching rows
-- type: add_filter_regex
-  expression: 'sample_'
-  invert: true  # TRUE means "remove non-matching" = keep matching
+  invert: true  # TRUE means "remove matching" = keep non-matching
 ```
 
-**Clearer thinking:** `invert: false` = "remove matches", `invert: true` = "remove non-matches"
+**Clearer thinking:** `invert: false` = "keep matches", `invert: true` = "remove matches" (keep non-matching)
 
 ### Pitfall 3: Regex Escaping
 
@@ -1264,7 +1264,22 @@ expression: 'file\.fastq'
 expression: '\(sample\)'
 ```
 
-### Pitfall 4: Case Sensitivity
+### Pitfall 4: Character Classes vs Alternation for Sequential IDs
+
+**Problem:** Character classes match single characters, not multi-digit suffixes
+
+```yaml
+# WRONG - [90] matches a single char (9 or 0) at one position
+# Matches SRR22376029 but NOT SRR22376030 (different digit boundary)
+expression: 'SRR2237602[90]'
+
+# RIGHT - alternation matches full strings
+expression: 'SRR22376029|SRR22376030'
+```
+
+**Why it fails:** `SRR2237602[90]` looks for prefix `SRR2237602` followed by one character that is `9` or `0`. It matches `SRR22376029` (prefix `SRR2237602` + `9`), but `SRR22376030` splits as `SRR2237603` + `0` — the prefix doesn't end at the same boundary. Use explicit alternation for sequential accession IDs.
+
+### Pitfall 5: Case Sensitivity
 
 **Problem:** Filters are case-sensitive
 
@@ -1277,7 +1292,7 @@ expression: '\(sample\)'
 
 **Solution:** Use regex with case-insensitive flag or normalize case first
 
-### Pitfall 5: Empty Sources After Filtering
+### Pitfall 6: Empty Sources After Filtering
 
 **Problem:** All rows filtered out
 
