@@ -406,8 +406,8 @@ Integer and float params: `0` is a valid value but falsy in Cheetah/Python. Use 
 
 ```
 --output-types
-#for $otype in $output_types
-    '$otype'
+#for $fmt in $output_types
+    '$fmt'
 #end for
 ```
 
@@ -778,19 +778,7 @@ Test conditionals and sections with explicit nesting (not pipe syntax):
 
 ### Running Tests
 
-```bash
-# Lint all tools
-planemo lint tools/mytool/
-
-# Test with biocontainers (standard for CLI-wrapping tools)
-planemo test --biocontainers tools/mytool/
-
-# Test a single tool
-planemo test --biocontainers tools/mytool/mytool_align.xml
-
-# Run a specific test by index (0-based)
-planemo test --test_index 0 tools/mytool/mytool_align.xml
-```
+Run `planemo lint` after every change, then `planemo test --biocontainers` to execute tests. See **Reference: Useful Planemo Commands** at the end of this document for the full command set.
 
 ### Golden File Testing
 
