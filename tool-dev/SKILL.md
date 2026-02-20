@@ -67,9 +67,7 @@ Galaxy XML elements must appear in this order. `planemo lint` enforces this.
     <macros>
         <import>macros.xml</import>
     </macros>
-    <expand macro="requirements">       <!-- with optional yield content -->
-        <expand macro="credentials"/>
-    </expand>
+    <expand macro="requirements"/>
 
     <version_command>echo @TOOL_VERSION@</version_command>
 
@@ -309,17 +307,20 @@ Use **token parameterization** on xml macros to pass values into the macro at ex
 
 The following macros are only needed when wrapping external APIs (not CLI tools).
 
-**Credentials** — Galaxy's vault-backed secrets system:
+**Credentials** — Galaxy's vault-backed secrets system. Place `<credentials>` inside `<requirements>` in the macro, not as a separate macro:
 
 ```xml
-<xml name="credentials">
-    <credentials name="mytool" version="1.0" label="MyTool API"
-        description="API key for MyTool service">
-        <secret name="api_key" inject_as_env="MYTOOL_API_KEY"
-            label="API Key" description="Your MyTool API key"/>
-    </credentials>
+<xml name="requirements">
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">mytool</requirement>
+        <credentials name="mytool" version="1.0" label="MyTool API" description="API key for MyTool service">
+            <secret name="api_key" inject_as_env="MYTOOL_API_KEY" label="API Key" description="Your MyTool API key"/>
+        </credentials>
+    </requirements>
 </xml>
 ```
+
+Tools then just use `<expand macro="requirements"/>` — no yield or separate credentials expand needed.
 
 **Test fixture param** — hidden param for fixture-based CI testing (bypasses API calls):
 
