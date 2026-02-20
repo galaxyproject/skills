@@ -649,9 +649,6 @@ if __name__ == "__main__":
 For tools wrapping external APIs (not the common case), the script also handles:
 - **Fixture bypass** — `--test-fixture` loads JSON instead of calling the API
 - **Credentials** — read API key from environment (`os.environ.get("MYTOOL_API_KEY")`)
-- **`create_model()` factory** — supports both API and local model variants
-
-See the AlphaGenome tools for a complete API-wrapping example.
 
 ---
 
@@ -977,7 +974,7 @@ touch tools/mytool/.shed.yml
 
 ### Step 3: Write macros.xml
 
-Start with version tokens, requirements (from bioconda/conda-forge), shared params, and citations. Use the template in Section 3.
+Start with version tokens, requirements (from bioconda/conda-forge), shared params, and citations. Use the macros.xml template from the macros.xml Patterns section above.
 
 ### Step 4: Write the Tool XML
 
