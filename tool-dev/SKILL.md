@@ -194,7 +194,7 @@ Use `<filter>` to create outputs only when certain params are set:
 </outputs>
 ```
 
-Filtered outputs still count toward `expect_num_outputs` in tests unless the filter excludes them.
+Set `expect_num_outputs` to the number of outputs actually produced by each test case. Outputs whose `<filter>` evaluates to False are not produced and should not be counted.
 
 ### Dynamic Output Discovery
 
@@ -721,8 +721,7 @@ See `references/testing.md` for the full assertion reference, collection testing
 
 - Give each test a **unique purpose** (e.g., "defaults", "compression on", "filtering active")
 - Point expected files to unique golden files — no duplicate outputs for different logic paths
-- Always include `expect_num_outputs` to verify file counts
-- Filtered outputs count toward `expect_num_outputs` unless the filter excludes them entirely
+- Always include `expect_num_outputs` — count only outputs actually produced (filters that evaluate to False don't produce output)
 - **Test data under 1 MB.** Use assertions (`<has_text>`, `<has_size>`) instead of golden files for larger outputs.
 - Include tests for output filters to verify filtering actually occurs
 - Include tests for error conditions with expected failure
