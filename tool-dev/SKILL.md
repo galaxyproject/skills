@@ -849,7 +849,7 @@ suite:
 |-------|-------------------|-----|
 | Cheetah snippet in `<xml>` macro | "This should be a `<token>`, not `<xml>`" | Move to `<token name="@CMD_...@">` with CDATA |
 | `display="checkboxes"` on multi-select | "Remove display attribute" | Delete it; let Galaxy pick the widget |
-| Missing `detect_errors="exit_code"` | "Add error detection" | Add to `<command>` element |
+| Missing `detect_errors="aggressive"` | "Add error detection" | Add to `<command>` element |
 | Version not from macro | "Use @TOOL_VERSION@ token" | Replace hardcoded version strings |
 | `KB` / `MB` in display text | "Use kb / Mb (SI lowercase)" | Fix option labels to lowercase units |
 | Missing `expect_num_outputs` on test | "Add expect_num_outputs" | Add `expect_num_outputs="1"` to `<test>` |
@@ -969,7 +969,7 @@ planemo shed_lint --shed_target toolshed --name mytool
 # on GitHub for existing wrappers
 ```
 
-Also check `bioconda` for an existing recipe — if none exists, you may need to create one first.
+Also check `bioconda` and `conda-forge` for an existing recipe — if none exists, you may need to create one first.
 
 ### Step 1: Inspect the Upstream Tool
 
@@ -1080,7 +1080,7 @@ planemo test --biocontainers tools/mytool/
 planemo test --biocontainers tools/mytool/mytool_align.xml
 
 # Test without containers (API tools with fixtures)
-planemo test tools/mytool/ --no_dependency_resolution --galaxy_python_version 3.12
+planemo test tools/mytool/
 
 # Serve locally for manual testing
 planemo serve tools/mytool/
