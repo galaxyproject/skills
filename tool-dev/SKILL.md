@@ -741,6 +741,8 @@ Use `<assert_contents>` with `<has_text>` for key content verification. Check he
 </output>
 ```
 
+For the full assertion catalog (file comparison modes, stream/command assertions, compressed output testing), see [`references/testing.md`](references/testing.md).
+
 Test conditionals and sections with explicit nesting (not pipe syntax):
 
 ```xml
@@ -753,46 +755,21 @@ Test conditionals and sections with explicit nesting (not pipe syntax):
 </section>
 ```
 
-### Common Test Mistakes
-
-```xml
-<!-- BAD: golden file for non-deterministic output -->
-<output name="result" file="expected.tsv"/>
-<!-- GOOD: use lines_diff or assert_contents -->
-<output name="result" file="expected.tsv" lines_diff="2"/>
-
-<!-- BAD: only checking file count, no content verification -->
-<test expect_num_outputs="1">
-    <param name="input" value="test.fa"/>
-</test>
-<!-- GOOD: always verify content -->
-<test expect_num_outputs="1">
-    <param name="input" value="test.fa"/>
-    <output name="result">
-        <assert_contents>
-            <has_text text="expected_header"/>
-        </assert_contents>
-    </output>
-</test>
-```
-
 ### Running Tests
 
 Run `planemo lint` after every change, then `planemo test --biocontainers` to execute tests. See **Reference: Useful Planemo Commands** at the end of this document for the full command set.
 
-### Golden File Testing
+### Generating Expected Output Files
 
-The standard approach for CLI-wrapping tools. Regenerate expected output files directly from the container/dependency set used in production:
+The standard approach for CLI-wrapping tools. Run the tool once via planemo and let it update the expected output files in place:
 
 ```bash
-# Run the test, then copy the actual output to test-data/
-planemo test --biocontainers tools/mytool/mytool_align.xml
-cp /path/to/galaxy_output__*.bam tools/mytool/test-data/expected_output.bam
+planemo test --biocontainers --update_test_data tools/mytool/mytool_align.xml
 ```
 
 ### Fixture-Based Testing (API Tools Only)
 
-For the uncommon case of tools calling external APIs: record real responses as JSON fixtures and replay them in tests. This lets `planemo test` run without API keys. See Section 3 for the `test_fixture_param` macro.
+For the uncommon case of tools calling external APIs: record real responses as JSON fixtures and replay them in tests. This lets `planemo test` run without API keys. See the `test_fixture_param` macro in the macros.xml Patterns section above.
 
 ```bash
 # Fixture-based tests (no container needed, no API key)
@@ -961,13 +938,7 @@ docker run quay.io/biocontainers/<package>:<new_version> <command> --help
 
 Before writing anything, search the Main Tool Shed and Test Tool Shed for existing wrappers:
 
-```bash
-# Search the Tool Shed
-planemo shed_lint --shed_target toolshed --name mytool
-
-# Search tools-iuc, tools-devteam, and other IUC-maintained repos
-# on GitHub for existing wrappers
-```
+Search the [Main Tool Shed](https://toolshed.g2.bx.psu.edu/) and [Test Tool Shed](https://testtoolshed.g2.bx.psu.edu/) web UIs, and search `tools-iuc`, `tools-devteam`, and other IUC-maintained repos on GitHub for existing wrappers.
 
 Also check `bioconda` and `conda-forge` for an existing recipe — if none exists, you may need to create one first.
 
@@ -1091,7 +1062,4 @@ planemo test tools/mytool/
 
 # Serve locally for manual testing
 planemo serve tools/mytool/
-
-# Shed upload (after review approval)
-planemo shed_update --shed_target toolshed tools/mytool/
 ```
