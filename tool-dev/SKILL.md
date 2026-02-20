@@ -1,11 +1,11 @@
 ---
 name: tool-dev
-description: Comprehensive Galaxy tool development reference — creating new tools, testing, IUC review preparation, and updating existing tools. Use when authoring or modifying Galaxy tool wrappers for tools-iuc.
+description: Galaxy tool development reference — creating new tools, testing, IUC review preparation, and updating existing tools. Use when authoring or modifying Galaxy tool wrappers for tools-iuc.
 ---
 
-# Galaxy Tool Development — Comprehensive Reference
+# Galaxy Tool Development Reference
 
-Comprehensive reference for authoring Galaxy tool wrappers that pass tools-iuc review. Derived from real IUC review feedback (25 inline comments, 3 reviewers) on a 5-tool submission.
+Reference for authoring Galaxy tool wrappers that pass tools-iuc review. Derived from real IUC review feedback (25 inline comments, 3 reviewers) on a 5-tool submission.
 
 ## When to Use This Skill
 
@@ -45,7 +45,7 @@ tools/mytool/
     └── expected_filter.bed
 ```
 
-Most tools don't need Python scripts — the command block calls the CLI binary directly. Add `.py` wrapper scripts only when the upstream CLI can't produce the output Galaxy needs (format conversion, multi-step pipelines, etc.).
+Add `.py` wrapper scripts only when the upstream CLI can't produce the output Galaxy needs (format conversion, multi-step pipelines, etc.) — most tools don't need them.
 
 **Key rules:**
 - Tool IDs use underscores: `mytool_align`, not hyphens
@@ -214,7 +214,7 @@ Use `format="markdown"` for new tools (preferred over RST). Structure with bold 
 
 ## 3. macros.xml Patterns
 
-### Tokens vs XML Macros — The #1 Review Gotcha
+### Tokens vs XML Macros
 
 This is the single most common IUC review comment. Get it right from the start.
 
@@ -587,7 +587,7 @@ See [IUC Best Practices](https://galaxy-iuc-standards.readthedocs.io/en/latest/b
 
 ## 6. Python Wrapper Scripts (When Needed)
 
-Most Galaxy tools don't need a Python script — the command block calls the CLI binary directly. Add a wrapper script only when:
+Add a wrapper script only when:
 
 - The CLI output format doesn't match what Galaxy expects (needs conversion)
 - You need multi-step pipelines that are too complex for shell in the command block
@@ -756,7 +756,7 @@ Test conditionals and sections with explicit nesting (not pipe syntax):
 
 ### Running Tests
 
-Run `planemo lint` after every change, then `planemo test --biocontainers` to execute tests. See **Reference: Useful Planemo Commands** at the end of this document for the full command set.
+Run `planemo test --biocontainers` to execute tests. See **Reference: Useful Planemo Commands** at the end of this document for the full command set.
 
 ### Generating Expected Output Files
 
@@ -901,7 +901,7 @@ docker run quay.io/biocontainers/<package>:<new_version> <command> --help
 
 ### Common Update Bugs
 
-**Repeat element access** — the #1 bug found during updates:
+**Repeat element access** — the most common bug found during updates:
 
 ```cheetah
 ## WRONG: accesses outer scope, not loop variable
