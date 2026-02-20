@@ -578,7 +578,7 @@ See [IUC Best Practices](https://galaxy-iuc-standards.readthedocs.io/en/latest/b
 - **Unit notation in labels:** Use SI-style lowercase: "kb" not "KB", "Mb" not "MB". The option values can use uppercase (e.g., `value="1MB"`) but display text should read "1 Mb".
 - **Help text:** Keep it actionable and short. "Start small to verify results" is good.
 - **Citations:** Prefer `type="doi"` over `type="bibtex"` when a DOI is available. Search the upstream repo/paper for the correct DOI.
-- **4-space indentation** throughout XML and Cheetah code.
+- **4-space indentation** throughout XML and Cheetah code. Run `planemo format` before submitting to ensure consistent indentation matching Galaxy Language Server style.
 
 ---
 
@@ -1029,9 +1029,10 @@ Follow element order from Section 2:
 
 Use `auto_tool_repositories` and `suite` for multi-tool packages.
 
-### Step 7: Lint and Test
+### Step 7: Format, Lint, and Test
 
 ```bash
+planemo format tools/mytool/
 planemo lint tools/mytool/
 planemo test --biocontainers tools/mytool/
 ```
@@ -1070,6 +1071,12 @@ tool
 ## Reference: Useful Planemo Commands
 
 ```bash
+# Format XML files (consistent indentation, matches Galaxy Language Server)
+planemo format tools/mytool/
+
+# Format with preview (show diff without writing)
+planemo format --dry-run tools/mytool/
+
 # Lint a tool directory
 planemo lint tools/mytool/
 
