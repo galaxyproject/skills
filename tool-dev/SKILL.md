@@ -288,19 +288,17 @@ For complex macros, use **named yields** to inject content into specific slots:
 </expand>
 ```
 
-Use **token parameterization** on xml macros to pass values into the macro at expansion time:
+Use **token parameterization** on xml macros to pass values into the macro at expansion time. Token parameters are replaced with the value passed at expansion — use them for attribute values like labels, defaults, and formats:
 
 ```xml
 <!-- In macros.xml -->
-<xml name="format_param" tokens="default_format">
-    <param name="output_format" type="select" label="Output format">
-        <option value="tsv" selected="@DEFAULT_FORMAT@">TSV</option>
-        <option value="csv">CSV</option>
-    </param>
+<xml name="score_param" tokens="default_score,score_help">
+    <param argument="--min-score" type="float" value="@DEFAULT_SCORE@" min="0.0" max="1.0"
+           label="Minimum score" help="@SCORE_HELP@"/>
 </xml>
 
-<!-- In tool XML -->
-<expand macro="format_param" default_format="tsv"/>
+<!-- In tool XML — each tool can set its own default and help text -->
+<expand macro="score_param" default_score="0.5" score_help="Filter results below this threshold"/>
 ```
 
 ### API Tool Macros
